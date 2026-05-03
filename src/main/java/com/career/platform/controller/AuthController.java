@@ -39,6 +39,24 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody User user) {
+        try {
+            return ResponseEntity.ok(userService.registerUser(user));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user) {
+        try {
+            return ResponseEntity.ok(userService.loginUser(user.getUsername(), user.getPassword()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/profile/{username}")
     public ResponseEntity<?> getProfile(@PathVariable String username) {
         Optional<User> user = userService.getUserByUsername(username);
